@@ -1,3 +1,5 @@
+Sys.setenv('CUDA_VISIBLE_DEVICES'="0")
+
 # The aim of this lab exercise is to show you how to construct and train a deep
 # neural network using modern machine learning software packages.
 
@@ -101,6 +103,7 @@ model <- keras_model_sequential()
 model %>%
   layer_flatten(input_shape=c(28,28)) %>%
   layer_dense(units=128, activation = 'relu') %>%
+  layer_dense(units=64, activation = 'relu') %>%
   layer_dense(units=10, activation = 'softmax')
 
 # The first layer (layer_flatten) simply takes our 28 x 28 images and flattens them out
@@ -154,7 +157,10 @@ model %>% compile(
 # the inputs to the network. Here we will train the network for 10 epochs. This will mean 
 # the network sees each of the 60,000 images in the training set 10 times.
 
-model %>% fit(train_images, train_labels, epochs=5)
+model %>% fit(train_images, train_labels, epochs=50, validation_data = list(test_images, test_labels))
+
+
+
 
 
 
