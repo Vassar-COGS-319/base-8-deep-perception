@@ -157,10 +157,25 @@ model %>% compile(
 # the inputs to the network. Here we will train the network for 10 epochs. This will mean 
 # the network sees each of the 60,000 images in the training set 10 times.
 
-model %>% fit(train_images, train_labels, epochs=50, validation_data = list(test_images, test_labels))
+model %>% fit(train_images, train_labels, epochs=10, validation_data = list(test_images, test_labels))
 
+# PART 5: CHECK THE MODEL
 
+# We can use the predict() function to see how the model classifies the images
+# in the test data.
 
+test.predictions <- model %>% predict_classes(test_images)
+
+# We can compare these predictions with the test_labels to see where the model 
+# gets the right classification
+
+wrong.answers <- which(test.predictions != test_labels)
+
+# We can visualize a few of these to see what the network had trouble with.
+
+visualize.image(test_images[wrong.answers[1],,]) # show the image
+test.predictions[wrong.answers[1]] # category that the model predicted
+test_labels[wrong.answers[1]] # correct answer
 
 
 
